@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { login, register } from "../controllers/auth.controller.js";
+import { create, addGroup, removeGroup } from "../controllers/user.controller.js";
 import { body } from "express-validator";
 import { validationResultExpress } from "../middlewares/validationResultExpress.js";
 
 const router = Router();
 
 router.post(
-    '/register', 
+    '/create', 
     [
         body('name', 'minimo de 3 caracteres')
             .trim()
@@ -20,24 +20,27 @@ router.post(
             .isLength({min: 6})
     ], 
     validationResultExpress,
-    register
+    create
 );
 
 router.post(
-    '/login',
+    '/addGroup', 
     [
-        body('email', 'e-mail incorreto')
-            .trim()
-            .isEmail()
-            .normalizeEmail(),
-        body('password', 'minimo de 6 caracteres')
-            .trim()
-            .isLength({min: 6})
-    ],
+        body('user_id', 'required').not().isEmpty(),
+        body('group_id', 'required').not().isEmpty()
+    ], 
     validationResultExpress,
-    login
-
+    addGroup
 );
 
+router.post(
+    '/removeGroup', 
+    [
+        body('user_id', 'required').not().isEmpty(),
+        body('group_id', 'required').not().isEmpty()
+    ], 
+    validationResultExpress,
+    removeGroup
+);
 
 export default router;

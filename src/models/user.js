@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
+import bcryptjs from "bcryptjs";
 
-
-const {Schema, model} = mongoose;
-
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -20,9 +18,25 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    group: {
+    groups: [{
         type: String
+    }]
+});
+
+userSchema.pre("save", async function(next){
+    const user = this
+
+    if(!user.isModified('password')) return next()
+
+    try {
+        const salt = await bcryptjs.genSalt(10);
+        user.password = await bcryptjs.hash(user.password, salt)
+        next()
+    } catch (error) {
+        console.log(error);
+        throw new Error('Error hash password')
     }
 });
 
-export const User = model('user', userSchema);
+
+export const User = mongoose.model('user', userSchema);
