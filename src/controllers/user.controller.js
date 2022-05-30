@@ -16,6 +16,28 @@ export const create = async(req,res) => {
     }
 };
 
+export const update = async (req, res) => {
+    try {
+        
+        let { name, email } = req.body;
+
+        const user = await User.findById(req.params.id);
+
+        if (!user) return res.status(404).json({ error: "Usuário não encontrado" });
+
+        user.name = (name) ? name : user.name;
+        user.email = (email) ? email : user.email;
+
+        await user.save();
+
+        return res.json({ id: user.id, name: user.name, email: user.email});
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "error de servidor" });
+    }
+};
+
 export const addGroup = async(req,res) => { 
     const {user_id, group_id} = req.body;
 
@@ -30,7 +52,7 @@ export const addGroup = async(req,res) => {
 
 export const addGroupId = async(user_id, group_id) => {
         
-    let user = await User.findOne({ _id: user_id });
+    let user = await User.findById(user_id);
 
     if(!user) return ({code: 400, message: 'usuário não encontrado'});
     
@@ -61,7 +83,7 @@ export const removeGroup = async(req,res) => {
 
 export const removeGroupId = async(user_id, group_id) => {
         
-    let user = await User.findOne({ _id: user_id });
+    let user = await User.findById(user_id);
 
     if(!user) return ({code: 400, message: 'usuário não encontrado'});
 

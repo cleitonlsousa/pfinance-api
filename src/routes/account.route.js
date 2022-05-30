@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { create, update, find, remove } from "../controllers/group.controller.js";
+import { create, update, find, remove } from "../controllers/account.controller.js";
 import { 
-    groupBodyValidator,
+    accountBodyValidator,
     validationResultExpress 
 } from "../middlewares/validatorManager.js";
 
 const router = Router();
 
-router.post('/', groupBodyValidator, create);
+router.post('/', accountBodyValidator, create);
 router.put("/:id", validationResultExpress, update);
 router.get('/:id', find);
 router.delete('/:id', remove);

@@ -22,14 +22,35 @@ export const create = async(req,res) => {
     }
 };
 
+export const update = async (req, res) => {
+    try {
+        
+        let { name, description } = req.body;
+
+        const group = await Group.findById(req.params.id);
+
+        if (!group) return res.status(404).json({ error: "Grupo não encontrado" });
+
+        group.name = (name) ? name : group.name;
+        group.description = (description) ? description : group.description;
+
+        await group.save();
+
+        return res.json({ id: group.id, name: group.name, description: group.description});
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "error de servidor" });
+    }
+};
+
 export const find = async(req,res) => { 
     
     try {
         
-        const group = await Group.findOne({_id: req.params.id});
+        const group = await Group.findById(user_id);
         
-        return group == null ? 
-        res.status(404).json({error: 'Grupo não encontrado'}) : res.json({ id: group.id, name: group.name, description: group.description});
+        return (group) ?  res.json({ group }) : res.status(404).json({ error: "Grupo não encontrado" });
     
     } catch (error) {
         console.log(error)

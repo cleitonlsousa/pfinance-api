@@ -20,7 +20,7 @@ export const addGroup = async(req,res) => {
     const {user_id, group_id} = req.body;
 
     try {
-        let user = await User.findOne({ _id: user_id });
+        let user = await User.findById(user_id);
         user.groups.push({group_id});
         await user.save();
         return res.status(201).json({ok: true})
