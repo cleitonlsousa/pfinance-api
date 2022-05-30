@@ -2,6 +2,7 @@ import { Account } from '../models/account.js';
 
 
 export const create = async(req,res) => { 
+
     const {name, type, amount, description, paymant_due_date, statement_date, show_in_resume} = req.body;   
 
     try {

@@ -28,6 +28,10 @@ const accountSchema = new mongoose.Schema({
     show_in_resume: {
         type: Boolean
     }
-});
+},
+{ 
+    versionKey: false 
+}
+);
 
 export const Account = mongoose.model('account', accountSchema);

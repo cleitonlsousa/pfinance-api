@@ -5,11 +5,60 @@ import {
     validationResultExpress 
 } from "../middlewares/validatorManager.js";
 
-const router = Router();
+const accountRouter = Router();
 
-router.post('/', accountBodyValidator, create);
-router.put("/:id", accountBodyValidator, validationResultExpress, update);
-router.get('/:id', find);
-router.delete('/:id', remove);
+accountRouter.post('/v1/accounts', accountBodyValidator, async(req, res) => {
+    /*
+        #swagger.tags = ['Account']
+        #swagger.security = [{
+            "Authorization": []
+        }]
 
-export default router;
+        #swagger.parameters['Account'] = {
+            description: "Create a account",
+            in: 'body',
+            required: true,
+            schema: { $ref: "#definitions/AccountModel"}
+        } 
+    
+    */
+    await create(req, res);
+});
+accountRouter.put('/v1/accounts/:id', accountBodyValidator, validationResultExpress, async(req, res) => {
+    /*
+        #swagger.tags = ['Account']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+
+        #swagger.parameters['Account'] = {
+            description: "Update a account",
+            in: 'body',
+            required: true,
+            schema: { $ref: "#definitions/AccountModel"}
+        } 
+    */
+    await update(req, res);
+});
+
+accountRouter.get('/v1/accounts/:id', async(req, res) => {
+    /*
+        #swagger.tags = ['Account']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+    */
+    await find(req, res);
+});
+
+accountRouter.delete('/v1/accounts/:id', async(req, res) => {
+    /*
+        #swagger.tags = ['Account']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+    */
+    await remove(req, res);
+});
+
+export default accountRouter;

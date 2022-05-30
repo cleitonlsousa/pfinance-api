@@ -21,7 +21,11 @@ const userSchema = new mongoose.Schema({
     groups: [{
         type: String
     }]
-});
+},
+{ 
+    versionKey: false 
+}
+);
 
 userSchema.pre("save", async function(next){
     const user = this

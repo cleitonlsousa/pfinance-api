@@ -1,0 +1,961 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "PFinance API",
+    "description": "Description"
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Account",
+      "description": "Accounts endpoints"
+    },
+    {
+      "name": "Category",
+      "description": "Categories endpoints"
+    },
+    {
+      "name": "Group",
+      "description": "Groups endpoints"
+    },
+    {
+      "name": "Transaction",
+      "description": "Transactions endpoints"
+    },
+    {
+      "name": "User",
+      "description": "Users endpoints"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "description": "Value: Bearer ",
+      "in": "header",
+      "scheme": "bearer"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/categories": {
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Category",
+            "description": "Create a new category",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryModel"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/categories/{id}": {
+      "put": {
+        "tags": [
+          "Category"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Category",
+            "description": "Update a category",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Category"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/groups": {
+      "post": {
+        "tags": [
+          "Group"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Group",
+            "description": "Create a new group",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GroupModel"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/groups/{id}": {
+      "put": {
+        "tags": [
+          "Group"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Group",
+            "description": "Update a group",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GroupModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Group"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Group"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/users": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "description": "Create a new user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateUserModel"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/users/{id}": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "description": "Create a new user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUserModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/users/addGroup": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "Associate user to group",
+            "schema": {
+              "$ref": "#/definitions/UserGroupModel"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/users/removeGroup": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "Remove user to group",
+            "schema": {
+              "$ref": "#/definitions/UserGroupModel"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/accounts": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Account",
+            "description": "Create a account",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AccountModel"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/accounts/{id}": {
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Account",
+            "description": "Update a account",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AccountModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Account"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/transactions": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Transaction",
+            "in": "body",
+            "description": "Create a transaction",
+            "schema": {
+              "$ref": "#/definitions/TransactionModel"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/transactions/{id}": {
+      "put": {
+        "tags": [
+          "Transaction"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Transaction",
+            "in": "body",
+            "description": "Update a transaction",
+            "schema": {
+              "$ref": "#/definitions/TransactionModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Transaction"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "CreateUserModel": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "jdoe@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password#123"
+        },
+        "group": {
+          "type": "string",
+          "example": "62938b753f18a9b73998ac7b"
+        }
+      },
+      "required": [
+        "name",
+        "email",
+        "password",
+        "group"
+      ]
+    },
+    "UpdateUserModel": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "jdoe@gmail.com"
+        },
+        "group": {
+          "type": "string",
+          "example": "62938b753f18a9b73998ac7b"
+        }
+      },
+      "required": [
+        "name",
+        "email",
+        "group"
+      ]
+    },
+    "ChangePasswordModel": {
+      "type": "object",
+      "properties": {
+        "oldPassword": {
+          "type": "string",
+          "example": "Password123#"
+        },
+        "newPassword": {
+          "type": "string",
+          "example": "Password789#"
+        }
+      },
+      "required": [
+        "oldPassword",
+        "newPassword"
+      ]
+    },
+    "UserGroupModel": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "example": "6292c216d00c6e3f6699746b"
+        },
+        "group_id": {
+          "type": "string",
+          "example": "62938bec3f18a9b73998ac87"
+        }
+      },
+      "required": [
+        "user_id",
+        "group_id"
+      ]
+    },
+    "TransactionModel": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "DEBITO"
+        },
+        "value": {
+          "type": "number",
+          "example": 100
+        },
+        "date": {
+          "type": "string",
+          "example": "2022/05/30"
+        },
+        "user": {
+          "type": "string",
+          "example": "6292c216d00c6e3f6699746b"
+        },
+        "account": {
+          "type": "string",
+          "example": "62941fc96018855f25853280"
+        },
+        "category": {
+          "type": "string",
+          "example": "629410e6d4100b5cb9cd7a72"
+        },
+        "recurring": {
+          "type": "boolean",
+          "example": false
+        },
+        "split": {
+          "type": "boolean",
+          "example": false
+        }
+      },
+      "required": [
+        "type",
+        "value",
+        "date",
+        "user",
+        "account",
+        "category",
+        "recurring",
+        "split"
+      ]
+    },
+    "GroupModel": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Grupo 05"
+        },
+        "description": {
+          "type": "string",
+          "example": "Grupo G5"
+        },
+        "users": {
+          "type": "array",
+          "example": [
+            "6292c216d00c6e3f6699746b",
+            "6292c2add00c6e3f6699746d"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "users"
+      ]
+    },
+    "CategoryModel": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Combustivel"
+        },
+        "description": {
+          "type": "string",
+          "example": "despesas de Combustivel"
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ]
+    },
+    "AccountModel": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "visa itau"
+        },
+        "type": {
+          "type": "string",
+          "example": "CARTAO"
+        },
+        "amount": {
+          "type": "number",
+          "example": 0
+        },
+        "description": {
+          "type": "string",
+          "example": "controle cartão de credito"
+        },
+        "paymant_due_day": {
+          "type": "number",
+          "example": 15
+        },
+        "statement_day": {
+          "type": "number",
+          "example": 1
+        },
+        "show_in_resume": {
+          "type": "boolean",
+          "example": true
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "amount",
+        "description",
+        "paymant_due_day",
+        "statement_day",
+        "show_in_resume"
+      ]
+    }
+  }
+}

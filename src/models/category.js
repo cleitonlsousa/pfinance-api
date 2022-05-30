@@ -17,6 +17,10 @@ const categorySchema = new mongoose.Schema({
     parent: {
         type: String
     }
-});
+},
+{ 
+    versionKey: false 
+}
+);
 
 export const Category = mongoose.model('category', categorySchema);

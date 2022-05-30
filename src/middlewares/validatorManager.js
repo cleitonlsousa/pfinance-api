@@ -68,7 +68,7 @@ export const accountBodyValidator = [
         .custom(
             (value) => {
                 const enums =  Object.keys(TypesEnum);
-                if (!enums.includes(type)) {
+                if (!enums.includes(value)) {
                     throw new Error("Tipo de conta inválida, opções: 'CARTAO', 'CONTA_CORRENTE', 'DINHEIRO'");
                 }
                 return value;
