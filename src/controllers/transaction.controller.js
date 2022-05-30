@@ -1,13 +1,13 @@
 import { Transaction } from '../models/transaction.js';
-import { RecurringEnum } from '../enuns/transaction.recurring.enum';
+import { RecurringEnum } from '../enuns/transaction.recurring.enum.js';
+
+const recurringEnum =  Object.keys(RecurringEnum);
 
 export const create = async(req,res) => { 
 
     try {
 
-        const {type, value, date, user, account, category, recurring, group, split, recurring_interval, split_transaction_id} = req.body;      
-
-        const recurringEnum =  Object.keys(RecurringEnum);
+        const {type, value, date, user, account, category, recurring, group, split, recurring_interval, split_transaction_id} = req.body;           
         
         if(recurring_interval && !recurringEnum.includes(recurring_interval)) return res.status(400).json({ error: "Tipo de intervalo inválido" });
                 
@@ -30,6 +30,8 @@ export const update = async (req, res) => {
     try {
         
         const {type, value, date, user, account, category, recurring, group, split, recurring_interval, split_transaction_id} = req.body; 
+
+        if(recurring_interval && !recurringEnum.includes(recurring_interval)) return res.status(400).json({ error: "Tipo de intervalo inválido" });
 
         const transaction = await Transaction.findById(req.params.id);
 

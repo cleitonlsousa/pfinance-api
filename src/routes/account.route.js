@@ -8,7 +8,7 @@ import {
 const router = Router();
 
 router.post('/', accountBodyValidator, create);
-router.put("/:id", validationResultExpress, update);
+router.put("/:id", accountBodyValidator, validationResultExpress, update);
 router.get('/:id', find);
 router.delete('/:id', remove);
 

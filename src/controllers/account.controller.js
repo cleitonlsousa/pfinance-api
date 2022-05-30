@@ -1,14 +1,10 @@
 import { Account } from '../models/account.js';
-import { TypesEnum } from '../enuns/account.type.enum.js';
+
 
 export const create = async(req,res) => { 
     const {name, type, amount, description, paymant_due_date, statement_date, show_in_resume} = req.body;   
 
     try {
-
-        const enums =  Object.keys(TypesEnum);
-        
-        if(!enums.includes(type)) return res.status(400).json({ error: "Tipo de conta inválida, opções: 'CARTAO', 'CONTA_CORRENTE', 'DINHEIRO'" });
                 
         const account = new Account({name, type, active: true, amount, description, paymant_due_date, statement_date, show_in_resume});
     

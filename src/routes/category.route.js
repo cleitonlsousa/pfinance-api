@@ -8,7 +8,7 @@ import {
 const router = Router();
 
 router.post('/', categoryBodyValidator, create);
-router.put("/:id", validationResultExpress, update);
+router.put("/:id", categoryBodyValidator, validationResultExpress, update);
 router.get('/:id', find);
 router.delete('/:id', remove);
 

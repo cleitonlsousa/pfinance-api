@@ -9,7 +9,7 @@ import {
 const router = Router();
 
 router.post('/', userBodyCreateValidator, create);
-router.put("/:id", validationResultExpress, update);
+router.put("/:id", userBodyCreateValidator, validationResultExpress, update);
 router.post('/addGroup', userGroupBodyValidator, addGroup);
 router.post('/removeGroup', userGroupBodyValidator, removeGroup);
 

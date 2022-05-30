@@ -8,7 +8,7 @@ import {
 const router = Router();
 
 router.post('/', groupBodyValidator, create);
-router.put("/:id", validationResultExpress, update);
+router.put("/:id", groupBodyValidator, validationResultExpress, update);
 router.get('/:id', find);
 router.delete('/:id', remove);
 

@@ -5,7 +5,8 @@ import {
     UserRoute,
     GroupRoute,
     CategoryRoute,
-    AccountRoute
+    AccountRoute,
+    TransactionRoute
 } from './src/routes/index.js'
 
 const app = express();
@@ -15,6 +16,8 @@ app.use('/api/v1/user', UserRoute);
 app.use('/api/v1/group', GroupRoute);
 app.use('/api/v1/category', CategoryRoute);
 app.use('/api/v1/account', AccountRoute);
+app.use('/api/v1/transaction', TransactionRoute);
+
 
 const PORT = process.env.PORT || 5000
 
