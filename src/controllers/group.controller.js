@@ -48,7 +48,7 @@ export const find = async(req,res) => {
     
     try {
         
-        const group = await Group.findById(user_id);
+        const group = await Group.findById(req.params.id);
         
         return (group) ?  res.json({ group }) : res.status(404).json({ error: "Grupo não encontrado" });
     

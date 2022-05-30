@@ -1,23 +1,16 @@
 import 'dotenv/config';
 import './src/database/config.js';
 import express from 'express';
-import {
-    UserRoute,
-    GroupRoute,
-    CategoryRoute,
-    AccountRoute,
-    TransactionRoute
-} from './src/routes/index.js'
+import swaggerUi from 'swagger-ui-express';
+import swaggerFile from './swagger/swagger_output.json';
+import routes from './src/routes/index.js'
 
 const app = express();
 
 app.use(express.json());
-app.use('/api/v1/user', UserRoute);
-app.use('/api/v1/group', GroupRoute);
-app.use('/api/v1/category', CategoryRoute);
-app.use('/api/v1/account', AccountRoute);
-app.use('/api/v1/transaction', TransactionRoute);
 
+app.use(routes);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 const PORT = process.env.PORT || 5000
 

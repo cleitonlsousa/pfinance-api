@@ -14,6 +14,10 @@ const groupSchema = new mongoose.Schema({
         type: String,
         required: true
     }]
-});
+},
+{ 
+    versionKey: false 
+}
+);
 
 export const Group = mongoose.model('group', groupSchema);

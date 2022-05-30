@@ -5,11 +5,63 @@ import {
     validationResultExpress 
 } from "../middlewares/validatorManager.js";
 
-const router = Router();
+const groupRouter = Router();
 
-router.post('/', groupBodyValidator, create);
-router.put("/:id", groupBodyValidator, validationResultExpress, update);
-router.get('/:id', find);
-router.delete('/:id', remove);
+groupRouter.post('/v1/groups', groupBodyValidator, async(req, res) => {
+    /*
+        #swagger.tags = ['Group']
+        #swagger.security = [{
+            "Authorization": []
+        }]
 
-export default router;
+        #swagger.parameters['Group'] = {
+            description: "Create a new group",
+            in: 'body',
+            required: true,
+            schema: { $ref: "#definitions/GroupModel"}
+        } 
+    
+    */
+    await create(req, res);
+});
+
+groupRouter.put("/v1/groups/:id", groupBodyValidator, validationResultExpress, async(req, res) => {
+    /*
+        #swagger.tags = ['Group']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+
+        #swagger.parameters['Group'] = {
+            description: "Update a group",
+            in: 'body',
+            required: true,
+            schema: { $ref: "#definitions/GroupModel"}
+        } 
+    
+    */
+    await update(req, res);
+});
+
+groupRouter.get('/v1/groups/:id', async(req, res) => {
+    /*
+        #swagger.tags = ['Group']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+    */
+    await find(req, res);
+});
+
+groupRouter.delete('/v1/groups/:id', async(req, res) => {
+    /*
+        #swagger.tags = ['Group']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+    
+    */
+    await remove(req, res);
+});
+
+export default groupRouter;

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-'type', 'value', 'date', 'user', 'account', 'category', 'recurring', 'group', 'split'
+
 const transactionSchema = new mongoose.Schema({
     type: {
         type: String,
@@ -15,15 +15,15 @@ const transactionSchema = new mongoose.Schema({
         default: Date.now
     },
     user: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     account: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     category: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     recurring: {
@@ -31,7 +31,7 @@ const transactionSchema = new mongoose.Schema({
         required: true
     },
     group: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId
     },
     split: {
         type: Boolean,
@@ -44,6 +44,10 @@ const transactionSchema = new mongoose.Schema({
         type: String
     }    
 
-});
+},
+{ 
+    versionKey: false 
+}
+);
 
 export const Transaction = mongoose.model('transaction', transactionSchema);
