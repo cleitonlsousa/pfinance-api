@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { create, update, find, remove } from "../controllers/transaction.controller.js";
+import { create, update, find, remove, findAll } from "../controllers/transaction.controller.js";
 import { 
     transactionBodyValidator,
     validationResultExpress 
@@ -48,6 +48,17 @@ transactionRouter.get('/v1/transactions/:id', async(req, res) => {
     
     */
     await find(req, res);
+});
+
+transactionRouter.get('/v1/transactions', async(req, res) => {
+    /*
+        #swagger.tags = ['Transaction']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+    
+    */
+    await findAll(req, res);
 });
 
 transactionRouter.delete('/v1/transactions/:id', async(req, res) => {

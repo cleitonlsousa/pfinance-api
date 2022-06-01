@@ -1,7 +1,11 @@
 import { Transaction } from '../models/transaction.js';
 import { RecurringEnum } from '../enuns/transaction.recurring.enum.js';
 
+import mongoose from 'mongoose';
+import mongooseDateonly from 'mongoose-dateonly';
+
 const recurringEnum =  Object.keys(RecurringEnum);
+const dateOnly = new mongooseDateonly(mongoose);
 
 export const create = async(req,res) => { 
 
@@ -13,7 +17,7 @@ export const create = async(req,res) => {
                 
         const transaction = new Transaction({type, value, date, user, account, category, recurring, group, split, recurring_interval, split_transaction_id});
     
-        await transaction.save();
+        await transaction.save({ timestamps: { createdAt: true, updatedAt: false } });
 
         return res.status(201).json({message: "created"})
     
@@ -63,9 +67,36 @@ export const find = async(req,res) => {
     
     try {
 
-        const transaction = await Transaction.findById(req.params.id);
+        let transaction = await Transaction.findById(req.params.id);
+        
+        transaction = transaction.transform()
 
-        return (transaction) ? res.json({ transaction }) : res.status(404).json({ error: "Transação não encontrada" });
+        return (transaction) ? res.json( transaction ) : res.status(404).json({ error: "Transação não encontrada" });
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({error: 'Server error'})
+    }
+};
+
+export const findAll = async(req,res) => { 
+    
+    try {
+
+        let { dt_initial, dt_final} = req.query;
+
+        const filters = {
+            date: { 
+                $gte: new dateOnly(dt_initial), 
+                $lte: new dateOnly(dt_final) 
+            }
+        }
+
+        let transactions = await Transaction.find(filters).sort({ date: 'desc'});       
+
+        transactions = transactions.map((r) => {return r.transform()})
+
+        return (transactions) ? res.json({ transactions }) : res.status(404).json({ error: "Transação não encontrada" });
         
     } catch (error) {
         console.log(error)
