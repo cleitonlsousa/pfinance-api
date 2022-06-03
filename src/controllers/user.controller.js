@@ -16,6 +16,10 @@ export const create = async(req,res) => {
     }
 };
 
+export const find = async(req, res) => {
+    
+}
+
 export const update = async (req, res) => {
     try {
         

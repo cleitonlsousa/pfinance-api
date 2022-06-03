@@ -1,9 +1,6 @@
-import { Router } from "express";
-import { create, update, find, remove } from "../controllers/group.controller.js";
-import { 
-    groupBodyValidator,
-    validationResultExpress 
-} from "../middlewares/validatorManager.js";
+import { Router } from 'express';
+import { create, update, find, remove } from '../controllers/group.controller.js';
+import { groupBodyValidator } from '../middlewares/validator.manager.js';
 
 const groupRouter = Router();
 
@@ -25,7 +22,7 @@ groupRouter.post('/v1/groups', groupBodyValidator, async(req, res) => {
     await create(req, res);
 });
 
-groupRouter.put("/v1/groups/:id", groupBodyValidator, validationResultExpress, async(req, res) => {
+groupRouter.put("/v1/groups/:id", groupBodyValidator, async(req, res) => {
     /*
         #swagger.tags = ['Group']
         #swagger.security = [{

@@ -1,9 +1,6 @@
-import { Router } from "express";
-import { create, update, find, remove, findAll } from "../controllers/transaction.controller.js";
-import { 
-    transactionBodyValidator,
-    validationResultExpress 
-} from "../middlewares/validatorManager.js";
+import { Router } from 'express';
+import { create, update, find, remove, findAll } from '../controllers/transaction.controller.js';
+import { transactionBodyValidator } from '../middlewares/validator.manager.js';
 
 const transactionRouter = Router();
 
@@ -23,7 +20,7 @@ transactionRouter.post('/v1/transactions', transactionBodyValidator, async(req, 
     await create(req, res);
 });
 
-transactionRouter.put('/v1/transactions/:id', transactionBodyValidator, validationResultExpress, async(req, res) => {
+transactionRouter.put('/v1/transactions/:id', transactionBodyValidator, async(req, res) => {
     /*
         #swagger.tags = ['Transaction']
         #swagger.security = [{

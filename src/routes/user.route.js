@@ -1,10 +1,6 @@
-import { Router } from "express";
-import { create, update, addGroup, removeGroup } from "../controllers/user.controller.js";
-import { 
-    userBodyCreateValidator,
-    userGroupBodyValidator,
-    validationResultExpress 
-} from '../middlewares/validatorManager.js'
+import { Router } from 'express';
+import { create, find, update, addGroup, removeGroup } from '../controllers/user.controller.js';
+import { userBodyCreateValidator, userGroupBodyValidator } from '../middlewares/validator.manager.js'
 
 const router = Router();
 
@@ -24,7 +20,8 @@ router.post('/v1/users', userBodyCreateValidator, async(req, res) => {
     */
     await create(req, res);
 });
-router.put('/v1/users/:id', userBodyCreateValidator, validationResultExpress, async(req, res) => {
+
+router.put('/v1/users/:id', userBodyCreateValidator, async(req, res) => {
     /*
         #swagger.tags = ['User']
         #swagger.security = [{
@@ -40,6 +37,24 @@ router.put('/v1/users/:id', userBodyCreateValidator, validationResultExpress, as
     */
     await update(req, res);
 });
+
+router.get('/v1/users/:id', userBodyCreateValidator, async(req, res) => {
+    /*
+        #swagger.tags = ['User']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+    
+        #swagger.parameters['user'] = {
+            description: "Create a new user",
+            in: 'body',
+            required: true,
+            schema: { $ref: "#definitions/UpdateUserModel"}
+        } 
+    */
+    await update(req, res);
+});
+
 router.post('/v1/users/addGroup', userGroupBodyValidator, async(req, res) => {
     /*
         #swagger.tags = ['User']

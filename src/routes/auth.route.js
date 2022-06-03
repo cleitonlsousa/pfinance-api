@@ -1,43 +1,36 @@
-import { Router } from "express";
-import { login, register } from "../controllers/auth.controller.js";
-import { body } from "express-validator";
-import { validationResultExpress } from "../middlewares/validationResultExpress.js";
+import { Router } from 'express';
+import { login, infoToken } from '../controllers/auth.controller.js';
+import { bodyLoginValidator } from '../middlewares/validator.manager.js';
+import { requireToken } from '../middlewares/require.token.js';
 
 const router = Router();
 
-router.post(
-    '/register', 
-    [
-        body('name', 'minimo de 3 caracteres')
-            .trim()
-            .isLength({min: 3}),
-        body('email', 'e-mail incorreto')
-            .trim()
-            .isEmail()
-            .normalizeEmail(),
-        body('password', 'minimo de 6 caracteres')
-            .trim()
-            .isLength({min: 6})
-    ], 
-    validationResultExpress,
-    register
-);
+router.post('/v1/login', bodyLoginValidator, async(req, res) => {
+     /*
+        #swagger.tags = ['Auth']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+    
+        #swagger.parameters['auth'] = {
+            description: "Login",
+            in: 'body',
+            required: true,
+            schema: { $ref: "#definitions/LoginModel"}
+        } 
+    */
+    await login(req, res);
+});
 
-router.post(
-    '/login',
-    [
-        body('email', 'e-mail incorreto')
-            .trim()
-            .isEmail()
-            .normalizeEmail(),
-        body('password', 'minimo de 6 caracteres')
-            .trim()
-            .isLength({min: 6})
-    ],
-    validationResultExpress,
-    login
-
-);
-
+router.get('/v1/info', requireToken, async(req, res) => {
+    /*
+        #swagger.tags = ['Auth']
+        #swagger.security = [{
+            "Authorization": []
+        }] 
+    */
+    await infoToken(req, res);
+   
+});
 
 export default router;

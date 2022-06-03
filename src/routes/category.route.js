@@ -1,9 +1,6 @@
-import { Router } from "express";
-import { create, update, find, remove } from "../controllers/category.controller.js";
-import { 
-    categoryBodyValidator,
-    validationResultExpress 
-} from "../middlewares/validatorManager.js";
+import { Router } from 'express';
+import { create, update, find, remove } from '../controllers/category.controller.js';
+import { categoryBodyValidator } from '../middlewares/validator.manager.js';
 
 const categoryRouter = Router();
 
@@ -25,7 +22,7 @@ categoryRouter.post('/v1/categories', categoryBodyValidator, async(req, res) => 
     await create(req, res);
 });
 
-categoryRouter.put('/v1/categories/:id', categoryBodyValidator, validationResultExpress, async(req, res) => {
+categoryRouter.put('/v1/categories/:id', categoryBodyValidator, async(req, res) => {
     /*
         #swagger.tags = ['Category']
         #swagger.security = [{

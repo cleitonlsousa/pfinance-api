@@ -1,9 +1,6 @@
-import { Router } from "express";
-import { create, update, find, remove } from "../controllers/account.controller.js";
-import { 
-    accountBodyValidator,
-    validationResultExpress 
-} from "../middlewares/validatorManager.js";
+import { Router } from 'express';
+import { create, update, find, remove } from '../controllers/account.controller.js';
+import { accountBodyValidator } from '../middlewares/validator.manager.js';
 
 const accountRouter = Router();
 
@@ -24,7 +21,7 @@ accountRouter.post('/v1/accounts', accountBodyValidator, async(req, res) => {
     */
     await create(req, res);
 });
-accountRouter.put('/v1/accounts/:id', accountBodyValidator, validationResultExpress, async(req, res) => {
+accountRouter.put('/v1/accounts/:id', accountBodyValidator, async(req, res) => {
     /*
         #swagger.tags = ['Account']
         #swagger.security = [{

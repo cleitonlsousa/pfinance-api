@@ -14,6 +14,17 @@ export const validationResultExpress = (req, res, next) => {
     next();
 };
 
+export const bodyLoginValidator = [
+    body('email', 'e-mail incorreto')
+        .trim()
+        .isEmail()
+        .normalizeEmail(),
+    body('password', 'minimo de 6 caracteres')
+        .trim()
+        .isLength({min: 6}),
+    validationResultExpress
+];
+
 export const userBodyCreateValidator = [
     body('name', 'minimo de 3 caracteres')
         .trim()
