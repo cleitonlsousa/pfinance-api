@@ -11,11 +11,11 @@ export const create = async(req,res) => {
 
     try {
 
-        const {type, value, date, user, account, category, recurring, group, split, recurring_interval, split_transaction_id} = req.body;           
+        const {type, value, date, account, category, recurring, split, recurring_interval, split_transaction_id} = req.body;           
         
         if(recurring_interval && !recurringEnum.includes(recurring_interval)) return res.status(400).json({ error: "Tipo de intervalo inválido" });
                 
-        const transaction = new Transaction({type, value, date, user, account, category, recurring, group, split, recurring_interval, split_transaction_id});
+        const transaction = new Transaction({type, value, date, user: req.uid, account, category, recurring, split, recurring_interval, split_transaction_id});
     
         await transaction.save({ timestamps: { createdAt: true, updatedAt: false } });
 
@@ -33,7 +33,7 @@ export const create = async(req,res) => {
 export const update = async (req, res) => {
     try {
         
-        const {type, value, date, user, account, category, recurring, group, split, recurring_interval, split_transaction_id} = req.body; 
+        const {type, value, date, account, category, recurring, split, recurring_interval, split_transaction_id} = req.body; 
 
         if(recurring_interval && !recurringEnum.includes(recurring_interval)) return res.status(400).json({ error: "Tipo de intervalo inválido" });
 
@@ -41,14 +41,14 @@ export const update = async (req, res) => {
 
         if (!transaction) return res.status(404).json({ error: "transação não encontrada" });
 
+        if (!transaction.user.equals(req.uid)) return res.status(401).json({ error: "Sem permissão para essa transação" });
+
         transaction.type = (type) ? type : transaction.type;
         transaction.value = (value) ? value : transaction.value;
         transaction.date = (date) ? date : transaction.date;
-        transaction.user = (user) ? user : transaction.user;
         transaction.account = (account) ? account : transaction.account;
         transaction.category = (category) ? category : transaction.category;
         transaction.recurring = (recurring) ? recurring : transaction.recurring;
-        transaction.group = (group) ? group : transaction.group;
         transaction.split = (split) ? split : transaction.split;
         transaction.recurring_interval = (recurring_interval) ? recurring_interval : transaction.recurring_interval;
         transaction.split_transaction_id = (split_transaction_id) ? split_transaction_id : transaction.split_transaction_id;
@@ -69,9 +69,13 @@ export const find = async(req,res) => {
 
         let transaction = await Transaction.findById(req.params.id);
         
-        transaction = transaction.transform()
+        transaction = transaction.transform();
 
-        return (transaction) ? res.json( transaction ) : res.status(404).json({ error: "Transação não encontrada" });
+        if (!transaction) return res.status(404).json({ error: "transação não encontrada" });
+
+        if (!transaction.user.equals(req.uid)) return res.status(401).json({ error: "Sem permissão para essa transação" });
+
+        return res.json({ transaction });
         
     } catch (error) {
         console.log(error)
@@ -89,14 +93,17 @@ export const findAll = async(req,res) => {
             date: { 
                 $gte: new dateOnly(dt_initial), 
                 $lte: new dateOnly(dt_final) 
-            }
+            },
+            user: req.uid
         }
 
         let transactions = await Transaction.find(filters).sort({ date: 'desc'});       
 
-        transactions = transactions.map((r) => {return r.transform()})
+        transactions = transactions.map((r) => {return r.transform()});
 
-        return (transactions) ? res.json({ transactions }) : res.status(404).json({ error: "Transação não encontrada" });
+        if (!transactions) return res.status(404).json({ error: "transação não encontrada" });
+
+        return (transactions) ? res.json({ transactions }) : res.status(404).json({ error: "Transações não encontradas" });      
         
     } catch (error) {
         console.log(error)
@@ -111,6 +118,8 @@ export const remove = async(req,res) => {
         const transaction = await Transaction.findById(req.params.id);
 
         if (!transaction) return res.status(404).json({ error: "Transação não encontrada" });
+
+        if (!transaction.user.equals(req.uid)) return res.status(401).json({ error: "Sem permissão para essa transação" });
 
         await transaction.remove();
        

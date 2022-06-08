@@ -6,6 +6,12 @@ const accountSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+        index: { unique: false}
+    },
     type: {
         type: String,
         required: true

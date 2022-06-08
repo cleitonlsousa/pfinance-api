@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { create, update, find, remove } from '../controllers/account.controller.js';
 import { accountBodyValidator } from '../middlewares/validator.manager.js';
+import { requireToken } from '../middlewares/require.token.js';
 
 const accountRouter = Router();
 
-accountRouter.post('/v1/accounts', accountBodyValidator, async(req, res) => {
+accountRouter.post('/v1/accounts', accountBodyValidator, requireToken, async(req, res) => {
     /*
         #swagger.tags = ['Account']
         #swagger.security = [{
@@ -21,7 +22,7 @@ accountRouter.post('/v1/accounts', accountBodyValidator, async(req, res) => {
     */
     await create(req, res);
 });
-accountRouter.put('/v1/accounts/:id', accountBodyValidator, async(req, res) => {
+accountRouter.put('/v1/accounts/:id', accountBodyValidator, requireToken, async(req, res) => {
     /*
         #swagger.tags = ['Account']
         #swagger.security = [{
@@ -38,7 +39,7 @@ accountRouter.put('/v1/accounts/:id', accountBodyValidator, async(req, res) => {
     await update(req, res);
 });
 
-accountRouter.get('/v1/accounts/:id', async(req, res) => {
+accountRouter.get('/v1/accounts/:id', requireToken, async(req, res) => {
     /*
         #swagger.tags = ['Account']
         #swagger.security = [{
@@ -48,7 +49,7 @@ accountRouter.get('/v1/accounts/:id', async(req, res) => {
     await find(req, res);
 });
 
-accountRouter.delete('/v1/accounts/:id', async(req, res) => {
+accountRouter.delete('/v1/accounts/:id', requireToken, async(req, res) => {
     /*
         #swagger.tags = ['Account']
         #swagger.security = [{

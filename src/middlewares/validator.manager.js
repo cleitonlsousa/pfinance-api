@@ -1,4 +1,4 @@
-import { validationResult, body, param } from "express-validator";
+import { validationResult, body } from "express-validator";
 import { Account } from '../models/account.js';
 import { Category } from "../models/category.js";
 import { User } from "../models/user.js";
@@ -36,26 +36,6 @@ export const userBodyCreateValidator = [
     body('password', 'minimo de 6 caracteres')
         .trim()
         .isLength({min: 6}),
-    validationResultExpress
-];
-
-export const userGroupBodyValidator = [
-    body('user_id', 'required')
-        .not()
-        .isEmpty(),
-    body('group_id', 'required')
-        .not()
-        .isEmpty(),
-    validationResultExpress
-];
-
-export const groupBodyValidator = [
-    body('name', 'minimo de 3 caracteres')
-        .trim()
-        .isLength({min: 3}),
-    body('description', 'minimo de 3 caracteres')
-        .trim()
-    .isLength({min: 3}),
     validationResultExpress
 ];
 

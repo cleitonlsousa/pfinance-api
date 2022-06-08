@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken';
+import { tokenVerificationError } from '../utils/tokenManager.js';
 
 export const requireToken = (req, res, next) => {
     try {
         
         let token = req.headers.authorization
-                
-        if(!token) throw new Error('Token inválido')
+                     
+        if(!token) throw new Error('No Bearer')
 
         token = token.split(" ")[1];
         const {uid} = jwt.verify(token, process.env.JWT_SECRET)
@@ -15,7 +16,6 @@ export const requireToken = (req, res, next) => {
         next();                
     
     } catch (error) {
-        console.log(error);
-        return res.status(401).json({error: error.message})
+        return res.status(401).send({error: tokenVerificationError[error.message]})
     }
 }

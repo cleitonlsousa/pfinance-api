@@ -7,7 +7,7 @@ export const create = async(req,res) => {
 
     try {
                 
-        const account = new Account({name, type, active: true, amount, description, paymant_due_date, statement_date, show_in_resume});
+        const account = new Account({name, user: req.uid, type, active: true, amount, description, paymant_due_date, statement_date, show_in_resume});
     
         await account.save();
 
@@ -30,6 +30,8 @@ export const update = async (req, res) => {
         const account = await Account.findById(req.params.id);
 
         if (!account) return res.status(404).json({ error: "Conta não encontrada" });
+
+        if (!account.user.equals(req.uid)) return res.status(401).json({ error: "Sem permissão para essa conta" });
 
         account.name = (name) ? name : account.name;
         account.type = (type) ? type : account.type;
@@ -55,7 +57,11 @@ export const find = async(req,res) => {
 
         const account = await Account.findById(req.params.id);
 
-        return (account) ? res.json({ account }) : res.status(404).json({ error: "Conta não encontrada" });
+        if (!account) return res.status(404).json({ error: "Conta não encontrada" });
+
+        if (!account.user.equals(req.uid)) return res.status(401).json({ error: "Sem permissão para essa conta" });
+
+        return res.json({ account });
         
     } catch (error) {
         console.log(error)
@@ -70,6 +76,8 @@ export const remove = async(req,res) => {
         const account = await Account.findById(req.params.id);
 
         if (!account) return res.status(404).json({ error: "Conta não encontrada" });
+
+        if (!account.user.equals(req.uid)) return res.status(401).json({ error: "Sem permissão para essa conta" });
 
         account.active = false;
 

@@ -24,10 +24,6 @@ const doc = {
           "description": "Categories endpoints"
       },
       {
-          "name": "Group",
-          "description": "Groups endpoints"
-      },
-      {
           "name": "Transaction",
           "description": "Transactions endpoints"
       },
@@ -49,39 +45,24 @@ const doc = {
     CreateUserModel: {   
       $name: "John doe",
       $email: "jdoe@gmail.com",
-      $password: "password#123",
-      $group: "62938b753f18a9b73998ac7b"         
+      $password: "password#123"
     },
     UpdateUserModel: {   
       $name: "John doe",
-      $email: "jdoe@gmail.com",
-      $group: "62938b753f18a9b73998ac7b"         
+      $email: "jdoe@gmail.com"    
     },
     ChangePasswordModel: {
       $oldPassword: "Password123#",
       $newPassword: "Password789#",
     },
-    UserGroupModel: {
-      $user_id: "6292c216d00c6e3f6699746b",
-      $group_id: "62938bec3f18a9b73998ac87"
-    },
     TransactionModel: {
       $type: "DEBITO",
       $value: 100,
       $date: "2022/05/30",
-      $user: "6292c216d00c6e3f6699746b",
       $account: "62941fc96018855f25853280",
       $category: "629410e6d4100b5cb9cd7a72",
       $recurring: false,
       $split: false
-    },
-    GroupModel: {
-      $name: "Grupo 05",
-      $description: "Grupo G5",
-      $users: [
-          "6292c216d00c6e3f6699746b",
-          "6292c2add00c6e3f6699746d"
-      ]
     },
     CategoryModel: {
       $name: "Combustivel",

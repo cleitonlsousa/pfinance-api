@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { create, update, find, remove, findAll } from '../controllers/transaction.controller.js';
 import { transactionBodyValidator } from '../middlewares/validator.manager.js';
+import { requireToken } from '../middlewares/require.token.js';
 
 const transactionRouter = Router();
 

@@ -5,7 +5,7 @@
     "title": "PFinance API",
     "description": "Description"
   },
-  "host": "http://localhost:5000",
+  "host": "localhost:5000",
   "basePath": "/",
   "tags": [
     {
@@ -15,10 +15,6 @@
     {
       "name": "Category",
       "description": "Categories endpoints"
-    },
-    {
-      "name": "Group",
-      "description": "Groups endpoints"
     },
     {
       "name": "Transaction",
@@ -49,6 +45,69 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "auth",
+            "description": "Login",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/api/v1/info": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
     "/api/v1/categories": {
       "post": {
         "tags": [
@@ -111,8 +170,8 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -144,6 +203,9 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -174,144 +236,8 @@
           "200": {
             "description": "OK"
           },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "Authorization": []
-          }
-        ]
-      }
-    },
-    "/api/v1/groups": {
-      "post": {
-        "tags": [
-          "Group"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "Group",
-            "description": "Create a new group",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/GroupModel"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "Authorization": []
-          }
-        ]
-      }
-    },
-    "/api/v1/groups/{id}": {
-      "put": {
-        "tags": [
-          "Group"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "Group",
-            "description": "Update a group",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/GroupModel"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "Authorization": []
-          }
-        ]
-      },
-      "get": {
-        "tags": [
-          "Group"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "Authorization": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Group"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -389,9 +315,6 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "404": {
             "description": "Not Found"
           },
@@ -404,55 +327,38 @@
             "Authorization": []
           }
         ]
-      }
-    },
-    "/api/v1/users/addGroup": {
-      "post": {
+      },
+      "get": {
         "tags": [
           "User"
         ],
         "description": "",
         "parameters": [
           {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "user",
+            "description": "Create a new user",
             "in": "body",
-            "description": "Associate user to group",
+            "required": true,
             "schema": {
-              "$ref": "#/definitions/UserGroupModel"
+              "$ref": "#/definitions/UpdateUserModel"
             }
           }
         ],
         "responses": {
-          "400": {
-            "description": "Bad Request"
-          }
-        },
-        "security": [
-          {
-            "Authorization": []
-          }
-        ]
-      }
-    },
-    "/api/v1/users/removeGroup": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "body",
-            "description": "Remove user to group",
-            "schema": {
-              "$ref": "#/definitions/UserGroupModel"
-            }
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Bad Request"
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -470,6 +376,11 @@
         "description": "",
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "Account",
             "description": "Create a account",
             "in": "body",
@@ -485,6 +396,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -511,6 +425,11 @@
             "type": "string"
           },
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "Account",
             "description": "Update a account",
             "in": "body",
@@ -524,8 +443,8 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -551,11 +470,19 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -581,11 +508,19 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -633,6 +568,40 @@
             "Authorization": []
           }
         ]
+      },
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "dt_initial",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "dt_final",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
       }
     },
     "/api/v1/transactions/{id}": {
@@ -664,6 +633,9 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -693,6 +665,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -724,6 +699,9 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -754,17 +732,12 @@
         "password": {
           "type": "string",
           "example": "password#123"
-        },
-        "group": {
-          "type": "string",
-          "example": "62938b753f18a9b73998ac7b"
         }
       },
       "required": [
         "name",
         "email",
-        "password",
-        "group"
+        "password"
       ]
     },
     "UpdateUserModel": {
@@ -777,16 +750,11 @@
         "email": {
           "type": "string",
           "example": "jdoe@gmail.com"
-        },
-        "group": {
-          "type": "string",
-          "example": "62938b753f18a9b73998ac7b"
         }
       },
       "required": [
         "name",
-        "email",
-        "group"
+        "email"
       ]
     },
     "ChangePasswordModel": {
@@ -806,23 +774,6 @@
         "newPassword"
       ]
     },
-    "UserGroupModel": {
-      "type": "object",
-      "properties": {
-        "user_id": {
-          "type": "string",
-          "example": "6292c216d00c6e3f6699746b"
-        },
-        "group_id": {
-          "type": "string",
-          "example": "62938bec3f18a9b73998ac87"
-        }
-      },
-      "required": [
-        "user_id",
-        "group_id"
-      ]
-    },
     "TransactionModel": {
       "type": "object",
       "properties": {
@@ -837,10 +788,6 @@
         "date": {
           "type": "string",
           "example": "2022/05/30"
-        },
-        "user": {
-          "type": "string",
-          "example": "6292c216d00c6e3f6699746b"
         },
         "account": {
           "type": "string",
@@ -863,39 +810,10 @@
         "type",
         "value",
         "date",
-        "user",
         "account",
         "category",
         "recurring",
         "split"
-      ]
-    },
-    "GroupModel": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "example": "Grupo 05"
-        },
-        "description": {
-          "type": "string",
-          "example": "Grupo G5"
-        },
-        "users": {
-          "type": "array",
-          "example": [
-            "6292c216d00c6e3f6699746b",
-            "6292c2add00c6e3f6699746d"
-          ],
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "name",
-        "description",
-        "users"
       ]
     },
     "CategoryModel": {

@@ -38,11 +38,6 @@ const transactionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    group: {
-        type: mongoose.Schema.Types.ObjectId,
-        index: { unique: false},
-        ref: "Group",
-    },
     split: {
         type: Boolean,
         default: false
@@ -74,7 +69,7 @@ transactionSchema.pre('save', function (next) {
     } else {
       this.updated_at = new Date().toLocaleString()
     }
-    console.log(' this.created_at ' +  this.created_at)
+
     next()
 })
 

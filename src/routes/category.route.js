@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { create, update, find, remove } from '../controllers/category.controller.js';
+import { create, update, find, findAll, remove } from '../controllers/category.controller.js';
 import { categoryBodyValidator } from '../middlewares/validator.manager.js';
+import { requireToken } from '../middlewares/require.token.js';
 
 const categoryRouter = Router();
 
-categoryRouter.post('/v1/categories', categoryBodyValidator, async(req, res) => {
+categoryRouter.post('/v1/categories', categoryBodyValidator, requireToken, async(req, res) => {
     /*
         #swagger.tags = ['Category']
         #swagger.security = [{
@@ -22,7 +23,7 @@ categoryRouter.post('/v1/categories', categoryBodyValidator, async(req, res) => 
     await create(req, res);
 });
 
-categoryRouter.put('/v1/categories/:id', categoryBodyValidator, async(req, res) => {
+categoryRouter.put('/v1/categories/:id', categoryBodyValidator, requireToken, async(req, res) => {
     /*
         #swagger.tags = ['Category']
         #swagger.security = [{
@@ -40,7 +41,7 @@ categoryRouter.put('/v1/categories/:id', categoryBodyValidator, async(req, res) 
     await update(req, res);
 });
 
-categoryRouter.get('/v1/categories/:id', async(req, res) => {
+categoryRouter.get('/v1/categories/:id', requireToken, async(req, res) => {
     /*
         #swagger.tags = ['Category']
         #swagger.security = [{
@@ -51,7 +52,18 @@ categoryRouter.get('/v1/categories/:id', async(req, res) => {
     await find(req, res);
 });
 
-categoryRouter.delete('/v1/categories/:id', async(req, res) => {
+categoryRouter.get('/v1/categories', requireToken, async(req, res) => {
+    /*
+        #swagger.tags = ['Category']
+        #swagger.security = [{
+            "Authorization": []
+        }]
+    
+    */
+    await findAll(req, res);
+});
+
+categoryRouter.delete('/v1/categories/:id', requireToken, async(req, res) => {
     /*
         #swagger.tags = ['Category']
         #swagger.security = [{

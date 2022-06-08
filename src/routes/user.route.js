@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { create, find, update, addGroup, removeGroup } from '../controllers/user.controller.js';
-import { userBodyCreateValidator, userGroupBodyValidator } from '../middlewares/validator.manager.js'
+import { create, find, update } from '../controllers/user.controller.js';
+import { userBodyCreateValidator } from '../middlewares/validator.manager.js'
 
 const router = Router();
 
@@ -53,37 +53,6 @@ router.get('/v1/users/:id', userBodyCreateValidator, async(req, res) => {
         } 
     */
     await update(req, res);
-});
-
-router.post('/v1/users/addGroup', userGroupBodyValidator, async(req, res) => {
-    /*
-        #swagger.tags = ['User']
-        #swagger.security = [{
-            "Authorization": []
-        }]
-    
-        #swagger.parameters['user'] = {
-            in: 'body',
-            description: "Associate user to group",
-            schema: { $ref: "#definitions/UserGroupModel"}
-        } 
-    */
-    await addGroup(req, res);
-});
-router.post('/v1/users/removeGroup', userGroupBodyValidator, async(req, res) => {
-     /*
-        #swagger.tags = ['User']
-        #swagger.security = [{
-            "Authorization": []
-        }]
-    
-        #swagger.parameters['user'] = {
-            in: 'body',
-            description: "Remove user to group",
-            schema: { $ref: "#definitions/UserGroupModel"}
-        } 
-    */
-    await removeGroup(req, res);
 });
 
 export default router;
